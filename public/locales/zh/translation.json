@@ -1,0 +1,25 @@
+{
+  "header": {
+    "email": "contact@mineracaocoto.com",
+    "phone": "+55 83 99927-9822",
+    "home": "首页",
+    "about": "关于我们",
+    "collection": "产品系列",
+    "showroom": "展厅",
+    "contact": "联系方式"
+  },
+  "home": {
+    "heroCategory": "石英岩",
+    "heroTitle": "翡翠绿",
+    "heroSubtitle": "脉络中蕴含着明确无误的自然之美与力量。",
+    "ctaButton": "查看产品系列",
+    "sectionTitle": "卓越的天然石材",
+    "sectionSubtitle": "凭借数十年的经验，Mineração Coto 已成为花岗岩和石英岩领域质量与独特的代名词，为市场上要求最苛刻的项目提供材料。",
+    "sectionButton": "了解更多"
+  },
+  "footer": {
+    "companyInfo": "豪华装饰石材开采和加工领域的领导者。",
+    "navigation": "网站导航",
+    "copyright": "© {year} Mineração Coto Luxury Stones. 版权所有。"
+  }
+}

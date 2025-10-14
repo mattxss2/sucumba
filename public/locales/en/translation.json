@@ -1,0 +1,25 @@
+{
+  "header": {
+    "email": "contact@mineracaocoto.com",
+    "phone": "+55 83 99927-9822",
+    "home": "Home",
+    "about": "About Us",
+    "collection": "Collection",
+    "showroom": "Showroom",
+    "contact": "Contact"
+  },
+  "home": {
+    "heroCategory": "QUARTZITE",
+    "heroTitle": "Emerald Green",
+    "heroSubtitle": "The strength of nature in veins of unmistakable beauty.",
+    "ctaButton": "View Collection",
+    "sectionTitle": "Excellence in Natural Stones",
+    "sectionSubtitle": "With decades of experience, Mineração Coto is synonymous with quality and exclusivity in granites and quartzites, providing materials for the most demanding projects on the market.",
+    "sectionButton": "Learn More"
+  },
+  "footer": {
+    "companyInfo": "Leader in the extraction and processing of luxury ornamental stones.",
+    "navigation": "Navigation",
+    "copyright": "© {year} Mineração Coto Luxury Stones. All rights reserved."
+  }
+}
