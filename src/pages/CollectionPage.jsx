@@ -1,55 +1,108 @@
-import { useState } from 'react';
-import { Link } from 'react-router-dom';
-import { motion } from 'framer-motion';
-import { useTranslation } from 'react-i18next';
-import { stones } from '../data/stones';
+import React, { useState, useEffect } from 'react';
 import AnimatedPage from '../components/AnimatedPage';
+import StoneCard from '../components/StoneCard';
 
-const StoneCard = ({ stone }) => (
-  <motion.div 
-    className="gallery-item"
-    layout
-    initial={{ opacity: 0, y: 20 }}
-    animate={{ opacity: 1, y: 0 }}
-    exit={{ opacity: 0, y: -20 }}
-    transition={{ duration: 0.5 }}
-    whileHover={{ scale: 1.03 }}
-  >
-    <Link to={`/collection/${stone.id}`}>
-      <div className="gallery-image-wrapper">
-        <img src={stone.imageUrl} alt={stone.name} />
-      </div>
-      <div className="gallery-caption">{stone.name}</div>
-    </Link>
-  </motion.div>
-);
+const API_URL = 'http://localhost:8080';
 
 function CollectionPage() {
-  const { t } = useTranslation();
-  const [filter, setFilter] = useState('All');
-  const filteredStones = filter === 'All' ? stones : stones.filter(s => s.category === filter);
+  // --- NOVOS ESTADOS PARA O FILTRO ---
+  const [todosOsMateriais, setTodosOsMateriais] = useState([]); // Guarda a lista completa e original
+  const [materiaisFiltrados, setMateriaisFiltrados] = useState([]); // Guarda a lista que será exibida
+  const [filtroAtivo, setFiltroAtivo] = useState('Todos'); // Guarda o tipo de filtro selecionado
+  
+  const [loading, setLoading] = useState(true);
+
+  // Busca os dados da API apenas uma vez, quando a página carrega
+  useEffect(() => {
+    fetch(`${API_URL}/api/materiais`)
+      .then(res => res.json())
+      .then(data => {
+        if (Array.isArray(data)) {
+          setTodosOsMateriais(data);
+          setMateriaisFiltrados(data); // Inicialmente, mostra todos
+        }
+        setLoading(false);
+      })
+      .catch(err => {
+        console.error("Erro ao buscar materiais:", err);
+        setLoading(false);
+      });
+  }, []);
+
+  // Função para lidar com a mudança de filtro
+  const handleFilterChange = (tipo) => {
+    setFiltroAtivo(tipo);
+    if (tipo === 'Todos') {
+      setMateriaisFiltrados(todosOsMateriais);
+    } else {
+      const filtrados = todosOsMateriais.filter(material => material.tipo === tipo);
+      setMateriaisFiltrados(filtrados);
+    }
+  };
+
+  if (loading) {
+    return (
+        <main className="main-content">
+            <p style={{ textAlign: 'center' }}>Carregando materiais...</p>
+        </main>
+    );
+  }
 
   return (
     <AnimatedPage>
-      <main>
-        <section className="section page-title-section">
-          <div className="container"><h1>{t('collection.title')}</h1></div>
-        </section>
-        <section className="section">
-          <div className="container">
-            <div className="collection-filters">
-              <button onClick={() => setFilter('All')} className={filter === 'All' ? 'active' : ''}>{t('collection.filterAll')}</button>
-              <button onClick={() => setFilter('Granito')} className={filter === 'Granito' ? 'active' : ''}>{t('collection.filterGranite')}</button>
-              <button onClick={() => setFilter('Quartzito')} className={filter === 'Quartzito' ? 'active' : ''}>{t('collection.filterQuartzite')}</button>
-            </div>
-            <motion.div layout className="gallery">
-                {filteredStones.map(stone => <StoneCard key={stone.id} stone={stone} />)}
-            </motion.div>
-          </div>
-        </section>
+      <main className="main-content">
+        <h1>Nossa Coleção</h1>
+
+        {/* --- BARRA DE FILTROS --- */}
+        <div className="filter-bar">
+          <button 
+            onClick={() => handleFilterChange('Todos')}
+            className={filtroAtivo === 'Todos' ? 'active' : ''}
+          >
+            Todos
+          </button>
+          <button 
+            onClick={() => handleFilterChange('Quartzito')}
+            className={filtroAtivo === 'Quartzito' ? 'active' : ''}
+          >
+            Quartzito
+          </button>
+          <button 
+            onClick={() => handleFilterChange('Granito')}
+            className={filtroAtivo === 'Granito' ? 'active' : ''}
+          >
+            Granito
+          </button>
+          <button 
+            onClick={() => handleFilterChange('Mármore')}
+            className={filtroAtivo === 'Mármore' ? 'active' : ''}
+          >
+            Mármore
+          </button>
+        </div>
+
+        <div className="materials-gallery">
+          {/* O map agora usa a lista de materiais filtrados */}
+          {materiaisFiltrados.length > 0 ? (
+            materiaisFiltrados.map(stone => (
+              <StoneCard
+                key={stone._id}
+                id={stone._id}
+                name={stone.nome}
+                image={stone.imagens && stone.imagens.length > 0 
+                  ? `${API_URL}${stone.imagens[0]}` 
+                  : 'https://placehold.co/600x400?text=Imagem+Indisponível'
+                }
+              />
+            ))
+          ) : (
+            <p>Nenhum material encontrado para este tipo.</p>
+          )}
+        </div>
       </main>
     </AnimatedPage>
   );
 }
 
 export default CollectionPage;
+

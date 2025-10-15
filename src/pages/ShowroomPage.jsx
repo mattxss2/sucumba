@@ -1,3 +1,4 @@
+import React from 'react';
 import AnimatedPage from '../components/AnimatedPage';
 import { Link } from 'react-router-dom';
 import { useTranslation } from 'react-i18next';
@@ -6,7 +7,8 @@ function ShowroomPage() {
     const { t } = useTranslation();
     return (
         <AnimatedPage>
-            <main>
+            {/* A ÚNICA ALTERAÇÃO É AQUI: adicionamos a className="main-content" à tag <main> */}
+            <main className="main-content"> 
                 <section className="section page-title-section">
                     <div className="container">
                         <h1>{t('showroom.title')}</h1>
@@ -29,7 +31,7 @@ function ShowroomPage() {
                             </div>
                             <div className="showroom-map">
                                 <iframe 
-                                    src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3962.336143936941!2d-36.92488818882069!3d-6.729118093153303!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x7a89c922a90967b%3A0x6b4324f11e1f13b1!2sPB-221%2C%20Santa%20Luzia%20-%20PB%2C%2058600-000!5e0!3m2!1spt-BR!2sbr!4v1728104152778!5m2!1spt-BR!2sbr" 
+                                    src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3946.99351191028!2d-36.92552838848286!3d-6.860161893113543!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x7aea5693a152661%3A0x28f731c3605c3c11!2sMINERA%C3%87%C3%83O%20COTO!5e1!3m2!1spt-BR!2sbr!4v1728953457199!5m2!1spt-BR!2sbr" 
                                     width="100%" 
                                     height="350" 
                                     style={{border:0}} 
